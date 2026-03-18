@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MD Editor</title>
+    <script type="module" src="/src/main.ts" defer></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="tab-bar">
+        <div id="tab-list"></div>
+        <button id="tab-add" title="新規タブ">+</button>
+        <div id="menu-area">
+          <button id="menu-btn" title="メニュー">☰</button>
+          <div id="menu-dropdown" class="hidden">
+            <button data-action="new">新規作成</button>
+            <button data-action="open">開く...</button>
+            <button data-action="save">保存</button>
+            <button data-action="save-as">名前を付けて保存...</button>
+            <hr />
+            <button data-action="shortcuts">ショートカット一覧 (Ctrl+/)</button>
+            <hr />
+            <button data-action="about">バージョン情報</button>
+          </div>
+        </div>
+      </div>
+      <div id="editor-container">
+        <div id="pane-source" class="pane">
+          <div id="source-toolbar">
+            <span class="toolbar-label">Source</span>
+            <span class="toolbar-sep"></span>
+            <button id="btn-new" title="新規作成 (Ctrl+N)">📄</button>
+            <div class="dropdown-btn-group">
+              <button id="btn-open" title="開く (Ctrl+O)">📂</button>
+              <button id="btn-open-dropdown" class="dropdown-arrow" title="最近使ったファイル">▼</button>
+              <div id="recent-files-dropdown" class="toolbar-dropdown hidden"></div>
+            </div>
+            <div class="dropdown-btn-group">
+              <button id="btn-save" title="保存 (Ctrl+S)">💾</button>
+              <button id="btn-save-dropdown" class="dropdown-arrow" title="保存オプション">▼</button>
+              <div id="save-dropdown" class="toolbar-dropdown hidden">
+                <button data-action="save">保存</button>
+                <button data-action="save-as">名前を付けて保存...</button>
+              </div>
+            </div>
+            <span class="toolbar-sep"></span>
+            <button id="btn-cut" title="切り取り (Ctrl+X)">✂</button>
+            <button id="btn-copy" title="コピー (Ctrl+C)">📋</button>
+            <button id="btn-paste" title="貼り付け (Ctrl+V)">📌</button>
+            <span class="toolbar-spacer"></span>
+            <button id="source-search-btn" title="検索・置換 (Ctrl+F)">🔍</button>
+          </div>
+          <div id="source-content"></div>
+        </div>
+        <div id="pane-divider"></div>
+        <div id="pane-wysiwyg" class="pane">
+          <div id="wysiwyg-toolbar">
+            <span class="toolbar-label">WYSIWYG</span>
+            <span class="toolbar-sep"></span>
+            <button data-cmd="bold" title="太字 (Ctrl+B)"><b>B</b></button>
+            <button data-cmd="italic" title="斜体 (Ctrl+I)"><i>I</i></button>
+            <button data-cmd="strike" title="取り消し線"><s>S</s></button>
+            <button data-cmd="code" title="インラインコード">&lt;/&gt;</button>
+            <span class="toolbar-sep"></span>
+            <button data-cmd="h1" title="見出し1">H1</button>
+            <button data-cmd="h2" title="見出し2">H2</button>
+            <button data-cmd="h3" title="見出し3">H3</button>
+            <span class="toolbar-sep"></span>
+            <button data-cmd="bulletList" title="箇条書き">•─</button>
+            <button data-cmd="orderedList" title="番号付きリスト">1.</button>
+            <button data-cmd="blockquote" title="引用">❝</button>
+            <button data-cmd="codeBlock" title="コードブロック">▦</button>
+            <button data-cmd="horizontalRule" title="水平線">―</button>
+            <span class="toolbar-sep"></span>
+            <button id="btn-link" title="リンク挿入 (Ctrl+K)">🔗</button>
+            <span class="toolbar-sep"></span>
+            <button id="table-insert-btn" title="テーブル挿入">▦表</button>
+            <span id="table-ops" class="table-ops hidden">
+              <span class="toolbar-sep"></span>
+              <button data-table="addColumnBefore" title="左に列追加">←|</button>
+              <button data-table="addColumnAfter" title="右に列追加">|→</button>
+              <button data-table="addRowBefore" title="上に行追加">↑─</button>
+              <button data-table="addRowAfter" title="下に行追加">─↓</button>
+              <span class="toolbar-sep"></span>
+              <button data-table="deleteColumn" title="列削除">|✕|</button>
+              <button data-table="deleteRow" title="行削除">─✕─</button>
+              <span class="toolbar-sep"></span>
+              <button data-table="deleteTable" title="テーブル削除">🗑</button>
+            </span>
+            <span class="toolbar-spacer"></span>
+            <button id="wysiwyg-search-btn" title="検索・置換 (Ctrl+F)">🔍</button>
+          </div>
+          <div id="wysiwyg-content"></div>
+        </div>
+      </div>
+      <div id="status-bar">
+        <span id="status-chars">0 文字</span>
+        <span id="status-lines">0 行</span>
+        <span id="status-cursor">1:1</span>
+        <span id="status-file">新規ファイル</span>
+      </div>
+    </div>
+  </body>
+</html>
