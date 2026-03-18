@@ -1,55 +1,61 @@
+import { t } from "./i18n";
+
 let panelEl: HTMLElement | null = null;
 
-const shortcuts = [
-  { category: "全般", items: [
-    ["Ctrl+1", "ソースペインにフォーカス"],
-    ["Ctrl+2", "WYSIWYGペインにフォーカス"],
-    ["Ctrl+Tab", "次のタブ"],
-    ["Ctrl+Shift+Tab", "前のタブ"],
-    ["Ctrl+N", "新規タブ"],
-    ["Ctrl+W", "タブを閉じる"],
-    ["Ctrl+O", "ファイルを開く"],
-    ["Ctrl+S", "保存"],
-    ["Ctrl+F", "検索・置換"],
-    ["Ctrl+/", "ショートカット一覧"],
-  ]},
-  { category: "テキスト書式 (WYSIWYG)", items: [
-    ["Ctrl+B", "太字"],
-    ["Ctrl+I", "斜体"],
-    ["Ctrl+Shift+X", "取り消し線"],
-    ["Ctrl+Shift+S", "取り消し線 (Word式)"],
-    ["Ctrl+`", "インラインコード"],
-    ["Ctrl+Shift+K", "コードブロック"],
-    ["Ctrl+K", "リンク挿入・編集"],
-  ]},
-  { category: "ブロック (WYSIWYG)", items: [
-    ["Alt+1 / 2 / 3 / 4", "見出し 1〜4"],
-    ["Ctrl+0", "通常の段落に戻す"],
-    ["Ctrl+Shift+8", "箇条書きリスト"],
-    ["Ctrl+Shift+7", "番号付きリスト"],
-    ["Ctrl+Shift+B", "引用"],
-    ["Ctrl+Shift+M", "書式をすべてクリア"],
-  ]},
-  { category: "検索パネル", items: [
-    ["Enter", "次の一致へ"],
-    ["Shift+Enter", "前の一致へ"],
-    ["Esc", "閉じる"],
-  ]},
-  { category: "編集共通", items: [
-    ["Ctrl+Z", "元に戻す"],
-    ["Ctrl+Y", "やり直し"],
-    ["Ctrl+A", "すべて選択"],
-  ]},
-];
+function getShortcuts() {
+  return [
+    { category: t("shortcuts.general"), items: [
+      ["Ctrl+1", t("shortcuts.focusSource")],
+      ["Ctrl+2", t("shortcuts.focusWysiwyg")],
+      ["Ctrl+Tab", t("shortcuts.nextTab")],
+      ["Ctrl+Shift+Tab", t("shortcuts.prevTab")],
+      ["Ctrl+N", t("shortcuts.newTab")],
+      ["Ctrl+W", t("shortcuts.closeTab")],
+      ["Ctrl+O", t("shortcuts.openFile")],
+      ["Ctrl+S", t("shortcuts.save")],
+      ["Ctrl+F", t("shortcuts.findReplace")],
+      ["Ctrl+/", t("shortcuts.shortcutList")],
+    ]},
+    { category: t("shortcuts.textFormat"), items: [
+      ["Ctrl+B", t("shortcuts.bold")],
+      ["Ctrl+I", t("shortcuts.italic")],
+      ["Ctrl+Shift+X", t("shortcuts.strikethrough")],
+      ["Ctrl+Shift+S", t("shortcuts.strikethroughWord")],
+      ["Ctrl+`", t("shortcuts.inlineCode")],
+      ["Ctrl+Shift+K", t("shortcuts.codeBlock")],
+      ["Ctrl+K", t("shortcuts.insertLink")],
+    ]},
+    { category: t("shortcuts.blocks"), items: [
+      ["Alt+1 / 2 / 3 / 4", t("shortcuts.headings")],
+      ["Ctrl+0", t("shortcuts.paragraph")],
+      ["Ctrl+Shift+8", t("shortcuts.bulletList")],
+      ["Ctrl+Shift+7", t("shortcuts.orderedList")],
+      ["Ctrl+Shift+B", t("shortcuts.blockquote")],
+      ["Ctrl+Shift+M", t("shortcuts.clearFormat")],
+    ]},
+    { category: t("shortcuts.searchPanel"), items: [
+      ["Enter", t("shortcuts.nextMatch")],
+      ["Shift+Enter", t("shortcuts.prevMatch")],
+      ["Esc", t("shortcuts.closePanel")],
+    ]},
+    { category: t("shortcuts.editing"), items: [
+      ["Ctrl+Z", t("shortcuts.undo")],
+      ["Ctrl+Y", t("shortcuts.redo")],
+      ["Ctrl+A", t("shortcuts.selectAll")],
+    ]},
+  ];
+}
 
 export function createShortcutHelp(): HTMLElement {
   const panel = document.createElement("div");
   panel.id = "shortcut-help-panel";
   panel.className = "hidden";
 
+  const shortcuts = getShortcuts();
+
   let html = `<div class="shortcut-help-header">
-    <span>キーボードショートカット</span>
-    <button id="shortcut-help-close" title="閉じる (Ctrl+/)">✕</button>
+    <span>${t("shortcuts.title")}</span>
+    <button id="shortcut-help-close" title="${t("shortcuts.close")}">✕</button>
   </div>
   <div class="shortcut-help-body">`;
 

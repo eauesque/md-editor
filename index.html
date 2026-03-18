@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/src/styles.css" />
@@ -11,95 +11,97 @@
     <div id="app">
       <div id="tab-bar">
         <div id="tab-list"></div>
-        <button id="tab-add" title="新規タブ">+</button>
+        <button id="tab-add" data-i18n-title="tab.new" title="New Tab">+</button>
         <div id="menu-area">
-          <button id="menu-btn" title="メニュー">☰</button>
+          <button id="menu-btn" data-i18n-title="tab.menu" title="Menu">☰</button>
           <div id="menu-dropdown" class="hidden">
-            <button data-action="new">新規作成</button>
-            <button data-action="open">開く...</button>
-            <button data-action="save">保存</button>
-            <button data-action="save-as">名前を付けて保存...</button>
+            <button data-action="new" data-i18n="menu.new">New</button>
+            <button data-action="open" data-i18n="menu.open">Open...</button>
+            <button data-action="save" data-i18n="menu.save">Save</button>
+            <button data-action="save-as" data-i18n="menu.saveAs">Save As...</button>
             <hr />
-            <button data-action="shortcuts">ショートカット一覧 (Ctrl+/)</button>
+            <button data-action="shortcuts" data-i18n="menu.shortcuts">Keyboard Shortcuts (Ctrl+/)</button>
             <hr />
-            <button data-action="about">バージョン情報</button>
+            <button data-action="about" data-i18n="menu.about">About</button>
+            <hr />
+            <div id="locale-selector" class="locale-selector"></div>
           </div>
         </div>
       </div>
       <div id="editor-container">
         <div id="pane-source" class="pane">
           <div id="source-toolbar">
-            <span class="toolbar-label">Source</span>
+            <span class="toolbar-label" data-i18n="toolbar.source">Source</span>
             <span class="toolbar-sep"></span>
-            <button id="btn-new" title="新規作成 (Ctrl+N)">📄</button>
+            <button id="btn-new" data-i18n-title="toolbar.new" title="New (Ctrl+N)">📄</button>
             <div class="dropdown-btn-group">
-              <button id="btn-open" title="開く (Ctrl+O)">📂</button>
-              <button id="btn-open-dropdown" class="dropdown-arrow" title="最近使ったファイル">▼</button>
+              <button id="btn-open" data-i18n-title="toolbar.open" title="Open (Ctrl+O)">📂</button>
+              <button id="btn-open-dropdown" class="dropdown-arrow" data-i18n-title="toolbar.recentFiles" title="Recent Files">▼</button>
               <div id="recent-files-dropdown" class="toolbar-dropdown hidden"></div>
             </div>
             <div class="dropdown-btn-group">
-              <button id="btn-save" title="保存 (Ctrl+S)">💾</button>
-              <button id="btn-save-dropdown" class="dropdown-arrow" title="保存オプション">▼</button>
+              <button id="btn-save" data-i18n-title="toolbar.save" title="Save (Ctrl+S)">💾</button>
+              <button id="btn-save-dropdown" class="dropdown-arrow" data-i18n-title="toolbar.saveOptions" title="Save Options">▼</button>
               <div id="save-dropdown" class="toolbar-dropdown hidden">
-                <button data-action="save">保存</button>
-                <button data-action="save-as">名前を付けて保存...</button>
+                <button data-action="save" data-i18n="menu.save">Save</button>
+                <button data-action="save-as" data-i18n="menu.saveAs">Save As...</button>
               </div>
             </div>
             <span class="toolbar-sep"></span>
-            <button id="btn-cut" title="切り取り (Ctrl+X)">✂</button>
-            <button id="btn-copy" title="コピー (Ctrl+C)">📋</button>
-            <button id="btn-paste" title="貼り付け (Ctrl+V)">📌</button>
+            <button id="btn-cut" data-i18n-title="toolbar.cut" title="Cut (Ctrl+X)">✂</button>
+            <button id="btn-copy" data-i18n-title="toolbar.copy" title="Copy (Ctrl+C)">📋</button>
+            <button id="btn-paste" data-i18n-title="toolbar.paste" title="Paste (Ctrl+V)">📌</button>
             <span class="toolbar-spacer"></span>
-            <button id="source-search-btn" title="検索・置換 (Ctrl+F)">🔍</button>
+            <button id="source-search-btn" data-i18n-title="toolbar.search" title="Find & Replace (Ctrl+F)">🔍</button>
           </div>
           <div id="source-content"></div>
         </div>
         <div id="pane-divider"></div>
         <div id="pane-wysiwyg" class="pane">
           <div id="wysiwyg-toolbar">
-            <span class="toolbar-label">WYSIWYG</span>
+            <span class="toolbar-label" data-i18n="toolbar.wysiwyg">WYSIWYG</span>
             <span class="toolbar-sep"></span>
-            <button data-cmd="bold" title="太字 (Ctrl+B)"><b>B</b></button>
-            <button data-cmd="italic" title="斜体 (Ctrl+I)"><i>I</i></button>
-            <button data-cmd="strike" title="取り消し線"><s>S</s></button>
-            <button data-cmd="code" title="インラインコード">&lt;/&gt;</button>
+            <button data-cmd="bold" data-i18n-title="toolbar.bold" title="Bold (Ctrl+B)"><b>B</b></button>
+            <button data-cmd="italic" data-i18n-title="toolbar.italic" title="Italic (Ctrl+I)"><i>I</i></button>
+            <button data-cmd="strike" data-i18n-title="toolbar.strike" title="Strikethrough"><s>S</s></button>
+            <button data-cmd="code" data-i18n-title="toolbar.inlineCode" title="Inline Code">&lt;/&gt;</button>
             <span class="toolbar-sep"></span>
-            <button data-cmd="h1" title="見出し1">H1</button>
-            <button data-cmd="h2" title="見出し2">H2</button>
-            <button data-cmd="h3" title="見出し3">H3</button>
+            <button data-cmd="h1" data-i18n-title="toolbar.h1" title="Heading 1">H1</button>
+            <button data-cmd="h2" data-i18n-title="toolbar.h2" title="Heading 2">H2</button>
+            <button data-cmd="h3" data-i18n-title="toolbar.h3" title="Heading 3">H3</button>
             <span class="toolbar-sep"></span>
-            <button data-cmd="bulletList" title="箇条書き">•─</button>
-            <button data-cmd="orderedList" title="番号付きリスト">1.</button>
-            <button data-cmd="blockquote" title="引用">❝</button>
-            <button data-cmd="codeBlock" title="コードブロック">▦</button>
-            <button data-cmd="horizontalRule" title="水平線">―</button>
+            <button data-cmd="bulletList" data-i18n-title="toolbar.bulletList" title="Bullet List">•─</button>
+            <button data-cmd="orderedList" data-i18n-title="toolbar.orderedList" title="Numbered List">1.</button>
+            <button data-cmd="blockquote" data-i18n-title="toolbar.blockquote" title="Blockquote">❝</button>
+            <button data-cmd="codeBlock" data-i18n-title="toolbar.codeBlock" title="Code Block">▦</button>
+            <button data-cmd="horizontalRule" data-i18n-title="toolbar.horizontalRule" title="Horizontal Rule">―</button>
             <span class="toolbar-sep"></span>
-            <button id="btn-link" title="リンク挿入 (Ctrl+K)">🔗</button>
+            <button id="btn-link" data-i18n-title="toolbar.link" title="Insert Link (Ctrl+K)">🔗</button>
             <span class="toolbar-sep"></span>
-            <button id="table-insert-btn" title="テーブル挿入">▦表</button>
+            <button id="table-insert-btn" data-i18n-title="toolbar.tableInsert" title="Insert Table">▦表</button>
             <span id="table-ops" class="table-ops hidden">
               <span class="toolbar-sep"></span>
-              <button data-table="addColumnBefore" title="左に列追加">←|</button>
-              <button data-table="addColumnAfter" title="右に列追加">|→</button>
-              <button data-table="addRowBefore" title="上に行追加">↑─</button>
-              <button data-table="addRowAfter" title="下に行追加">─↓</button>
+              <button data-table="addColumnBefore" data-i18n-title="toolbar.addColumnBefore" title="Add Column Left">←|</button>
+              <button data-table="addColumnAfter" data-i18n-title="toolbar.addColumnAfter" title="Add Column Right">|→</button>
+              <button data-table="addRowBefore" data-i18n-title="toolbar.addRowBefore" title="Add Row Above">↑─</button>
+              <button data-table="addRowAfter" data-i18n-title="toolbar.addRowAfter" title="Add Row Below">─↓</button>
               <span class="toolbar-sep"></span>
-              <button data-table="deleteColumn" title="列削除">|✕|</button>
-              <button data-table="deleteRow" title="行削除">─✕─</button>
+              <button data-table="deleteColumn" data-i18n-title="toolbar.deleteColumn" title="Delete Column">|✕|</button>
+              <button data-table="deleteRow" data-i18n-title="toolbar.deleteRow" title="Delete Row">─✕─</button>
               <span class="toolbar-sep"></span>
-              <button data-table="deleteTable" title="テーブル削除">🗑</button>
+              <button data-table="deleteTable" data-i18n-title="toolbar.deleteTable" title="Delete Table">🗑</button>
             </span>
             <span class="toolbar-spacer"></span>
-            <button id="wysiwyg-search-btn" title="検索・置換 (Ctrl+F)">🔍</button>
+            <button id="wysiwyg-search-btn" data-i18n-title="toolbar.search" title="Find & Replace (Ctrl+F)">🔍</button>
           </div>
           <div id="wysiwyg-content"></div>
         </div>
       </div>
       <div id="status-bar">
-        <span id="status-chars">0 文字</span>
-        <span id="status-lines">0 行</span>
+        <span id="status-chars">0 chars</span>
+        <span id="status-lines">0 lines</span>
         <span id="status-cursor">1:1</span>
-        <span id="status-file">新規ファイル</span>
+        <span id="status-file">New File</span>
       </div>
     </div>
   </body>

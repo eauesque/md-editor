@@ -33,6 +33,7 @@ import {
 import { openFile, saveFile, saveFileAs } from "./file-ops";
 import { getVersion, getTauriVersion } from "@tauri-apps/api/app";
 import { readTextFile } from "@tauri-apps/plugin-fs";
+import { initLocale, t, getLocale, getAvailableLocales, setLocale } from "./i18n";
 
 let focusedPane: "source" | "wysiwyg" = "source";
 
@@ -85,13 +86,13 @@ function updateStatusBar() {
   const chars = content.length;
   const cursor = getSourceCursorInfo();
 
-  document.getElementById("status-chars")!.textContent = `${chars} 文字`;
-  document.getElementById("status-lines")!.textContent = `${lines} 行`;
+  document.getElementById("status-chars")!.textContent = t("status.chars", { n: chars });
+  document.getElementById("status-lines")!.textContent = t("status.lines", { n: lines });
   document.getElementById("status-cursor")!.textContent = `${cursor.line}:${cursor.col}`;
 
   const tab = getActiveTab();
   document.getElementById("status-file")!.textContent =
-    tab?.filePath || "新規ファイル";
+    tab?.filePath || t("status.newFile");
 }
 
 // Tab UI rendering
@@ -204,6 +205,31 @@ function setupMenu() {
         break;
     }
   });
+
+  // Render locale selector inside menu dropdown
+  renderLocaleSelector(dropdown);
+}
+
+function renderLocaleSelector(dropdown: HTMLElement) {
+  const locales = getAvailableLocales();
+  const container = document.createElement("div");
+  container.className = "menu-locale-selector";
+  const select = document.createElement("select");
+  select.id = "locale-select";
+  for (const loc of locales) {
+    const option = document.createElement("option");
+    option.value = loc.id;
+    option.textContent = loc.label;
+    select.appendChild(option);
+  }
+  // Set the current locale
+  select.value = getLocale();
+  select.addEventListener("change", () => {
+    setLocale(select.value as any);
+    location.reload();
+  });
+  container.appendChild(select);
+  dropdown.appendChild(container);
 }
 
 async function handleOpen() {
@@ -220,7 +246,7 @@ async function handleOpenRecent(path: string) {
     createTab(path, content);
   } catch {
     // File may have been deleted/moved
-    alert(`ファイルを開けません: ${path}`);
+    alert(t("file.cannotOpen", { path }));
   }
 }
 
@@ -261,15 +287,15 @@ async function showAbout() {
   overlay.id = "about-overlay";
   overlay.innerHTML = `
     <div id="about-panel">
-      <h2>MD Editor</h2>
-      <p class="about-subtitle">Machst Du Editor</p>
+      <h2>${t("about.title")}</h2>
+      <p class="about-subtitle">${t("about.subtitle")}</p>
       <table class="about-info">
-        <tr><td>バージョン</td><td>${appVersion}</td></tr>
-        <tr><td>Tauri</td><td>${tauriVersion}</td></tr>
-        <tr><td>ライセンス</td><td>MIT License</td></tr>
+        <tr><td>${t("about.version")}</td><td>${appVersion}</td></tr>
+        <tr><td>${t("about.tauri")}</td><td>${tauriVersion}</td></tr>
+        <tr><td>${t("about.license")}</td><td>MIT License</td></tr>
       </table>
-      <p class="about-desc">AI生成テキストの確認・編集に最適化した<br>デュアルペインMarkdownエディタ</p>
-      <button id="about-close">閉じる</button>
+      <p class="about-desc">${t("about.description")}</p>
+      <button id="about-close">${t("about.close")}</button>
     </div>
   `;
   document.body.appendChild(overlay);
@@ -286,7 +312,7 @@ async function showAbout() {
 function renderRecentFiles(dropdown: HTMLElement) {
   const recent = getRecentFiles();
   if (recent.length === 0) {
-    dropdown.innerHTML = `<div class="dropdown-empty">最近使ったファイルはありません</div>`;
+    dropdown.innerHTML = `<div class="dropdown-empty">${t("file.noRecent")}</div>`;
     return;
   }
   dropdown.innerHTML = recent.map((path) =>
@@ -298,6 +324,18 @@ function renderRecentFiles(dropdown: HTMLElement) {
       dropdown.classList.add("hidden");
       handleOpenRecent(path);
     });
+  });
+}
+
+// Apply i18n to all elements with data-i18n and data-i18n-title attributes
+function applyI18n() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n")!;
+    el.textContent = t(key);
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-title")!;
+    (el as HTMLElement).title = t(key);
   });
 }
 
@@ -371,6 +409,8 @@ function setupKeyboard() {
 
 // Init
 window.addEventListener("DOMContentLoaded", () => {
+  initLocale();
+
   const sourceContainer = document.getElementById("source-content")!;
   const wysiwygContainer = document.getElementById("wysiwyg-content")!;
   const sourcePane = document.getElementById("pane-source")!;
@@ -479,6 +519,9 @@ window.addEventListener("DOMContentLoaded", () => {
   setupDivider();
   setupMenu();
   setupKeyboard();
+
+  // Apply i18n to HTML elements
+  applyI18n();
 
   // Create initial tab
   createTab();

@@ -5,6 +5,7 @@ import { TableRow } from "@tiptap/extension-table-row";
 import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
 import { Link } from "@tiptap/extension-link";
+import { t } from "./i18n";
 
 // Word-compatible keyboard shortcuts
 const WordShortcuts = Extension.create({
@@ -423,7 +424,7 @@ export function promptAndSetLink() {
   const { from, to } = editor.state.selection;
   const existingHref = editor.getAttributes("link").href || "";
 
-  const url = window.prompt("URL を入力:", existingHref);
+  const url = window.prompt(t("link.urlPrompt"), existingHref);
   if (url === null) return; // cancelled
 
   if (url === "") {
@@ -434,7 +435,7 @@ export function promptAndSetLink() {
 
   if (from === to) {
     // No selection: insert link text
-    const text = window.prompt("リンクテキスト:", url) || url;
+    const text = window.prompt(t("link.textPrompt"), url) || url;
     editor
       .chain()
       .focus()

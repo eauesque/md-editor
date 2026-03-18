@@ -1,3 +1,5 @@
+import { t } from "./i18n";
+
 const MAX_ROWS = 8;
 const MAX_COLS = 8;
 
@@ -22,7 +24,7 @@ export function createTablePicker(
 
   const label = document.createElement("div");
   label.className = "table-picker-label";
-  label.textContent = "テーブル挿入";
+  label.textContent = t("table.insert");
 
   for (let r = 0; r < MAX_ROWS; r++) {
     for (let c = 0; c < MAX_COLS; c++) {
@@ -33,7 +35,7 @@ export function createTablePicker(
 
       cell.addEventListener("mouseenter", () => {
         highlightCells(grid, r + 1, c + 1);
-        label.textContent = `${r + 1} × ${c + 1}`;
+        label.textContent = t("table.size", { r: r + 1, c: c + 1 });
       });
 
       cell.addEventListener("click", (e) => {
@@ -55,7 +57,7 @@ export function createTablePicker(
     picker.classList.toggle("hidden");
     if (!picker.classList.contains("hidden")) {
       highlightCells(grid, 0, 0);
-      label.textContent = "テーブル挿入";
+      label.textContent = t("table.insert");
     }
   });
 

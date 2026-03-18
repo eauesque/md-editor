@@ -154,6 +154,26 @@ html, body {
   margin: 4px 0;
 }
 
+.menu-locale-selector {
+  padding: 6px 16px;
+}
+
+.menu-locale-selector select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text);
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.menu-locale-selector select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
 /* Editor container */
 #editor-container {
   display: flex;

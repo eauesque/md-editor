@@ -1,3 +1,5 @@
+import { t } from "./i18n";
+
 export interface TabState {
   id: string;
   title: string;
@@ -31,7 +33,7 @@ export function createTab(
 ): TabState {
   const tab: TabState = {
     id: `tab-${nextId++}`,
-    title: title || (filePath ? fileNameFromPath(filePath) : "新規ファイル"),
+    title: title || (filePath ? fileNameFromPath(filePath) : t("tab.newFile")),
     filePath,
     content,
     modified: false,

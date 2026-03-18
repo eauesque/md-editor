@@ -8,6 +8,7 @@ import {
   replaceAll,
 } from "@codemirror/search";
 import type { Editor } from "@tiptap/core";
+import { t } from "./i18n";
 
 let sourceView: EditorView | null = null;
 let wysiwygEditor: Editor | null = null;
@@ -40,30 +41,30 @@ export function createSearchPanel(
   panel.innerHTML = `
     <div class="search-rows">
       <div class="search-nav-col">
-        <button id="search-prev" title="前へ (Shift+Enter)">▲</button>
-        <button id="search-swap" title="検索と置換を入れ替え">⇅</button>
-        <button id="search-next" title="次へ (Enter)">▼</button>
+        <button id="search-prev" title="${t("search.prev")}">▲</button>
+        <button id="search-swap" title="${t("search.swap")}">⇅</button>
+        <button id="search-next" title="${t("search.next")}">▼</button>
       </div>
       <div class="search-fields-col">
         <div class="search-row">
-          <input type="text" id="search-input" placeholder="検索..." />
+          <input type="text" id="search-input" placeholder="${t("search.placeholder")}" />
           <div class="search-actions">
             <span id="search-count"></span>
-            <label class="search-toggle" title="正規表現">
+            <label class="search-toggle" title="${t("search.regex")}">
               <input type="checkbox" id="search-regex" />
               <span>.*</span>
             </label>
-            <label class="search-toggle" title="大文字小文字を区別">
+            <label class="search-toggle" title="${t("search.caseSensitive")}">
               <input type="checkbox" id="search-case" />
               <span>Aa</span>
             </label>
           </div>
         </div>
         <div class="search-row">
-          <input type="text" id="replace-input" placeholder="置換..." />
+          <input type="text" id="replace-input" placeholder="${t("search.replacePlaceholder")}" />
           <div class="search-actions">
-            <button id="replace-one" title="置換">置換</button>
-            <button id="replace-all" title="一括置換">全置換</button>
+            <button id="replace-one" title="${t("search.replace")}">${t("search.replace")}</button>
+            <button id="replace-all" title="${t("search.replaceAll")}">${t("search.replaceAll")}</button>
           </div>
         </div>
       </div>
@@ -311,7 +312,7 @@ function updateMatchCount() {
       }
     }
   } catch {}
-  countEl.textContent = `${count} 件`;
+  countEl.textContent = t("search.count", { n: count });
 }
 
 export function showSearch() {

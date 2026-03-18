@@ -3,10 +3,11 @@ import {
   readTextFile,
   writeTextFile,
 } from "@tauri-apps/plugin-fs";
+import { t } from "./i18n";
 
-const MD_FILTERS = [
-  { name: "Markdown", extensions: ["md", "markdown", "txt"] },
-  { name: "すべてのファイル", extensions: ["*"] },
+const getMdFilters = () => [
+  { name: t("file.markdown"), extensions: ["md", "markdown", "txt"] },
+  { name: t("file.allFiles"), extensions: ["*"] },
 ];
 
 export async function openFile(): Promise<{
@@ -15,7 +16,7 @@ export async function openFile(): Promise<{
 } | null> {
   const selected = await open({
     multiple: false,
-    filters: MD_FILTERS,
+    filters: getMdFilters(),
   });
   if (!selected) return null;
   const path = selected as string;
@@ -33,7 +34,7 @@ export async function saveFile(
 
 export async function saveFileAs(content: string): Promise<string | null> {
   const path = await save({
-    filters: MD_FILTERS,
+    filters: getMdFilters(),
   });
   if (!path) return null;
   await writeTextFile(path, content);
