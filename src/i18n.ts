@@ -128,6 +128,9 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.redo": "Redo",
     "shortcuts.selectAll": "Select All",
 
+    // Drag and drop
+    "drop.overlay": "Drop file to open",
+
     // Default tab name
     "tab.newFile": "New File",
   },
@@ -236,6 +239,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.undo": "\u5143\u306b\u623b\u3059",
     "shortcuts.redo": "\u3084\u308a\u76f4\u3057",
     "shortcuts.selectAll": "\u3059\u3079\u3066\u9078\u629e",
+    "drop.overlay": "ファイルをドロップして開く",
     "tab.newFile": "\u65b0\u898f\u30d5\u30a1\u30a4\u30eb",
   },
 
@@ -343,6 +347,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.undo": "\u5fa9\u539f",
     "shortcuts.redo": "\u91cd\u505a",
     "shortcuts.selectAll": "\u5168\u9078",
+    "drop.overlay": "拖放檔案以開啟",
     "tab.newFile": "\u65b0\u6a94\u6848",
   },
 
@@ -450,6 +455,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.undo": "\u64a4\u9500",
     "shortcuts.redo": "\u91cd\u505a",
     "shortcuts.selectAll": "\u5168\u9009",
+    "drop.overlay": "拖放文件以打开",
     "tab.newFile": "\u65b0\u6587\u4ef6",
   },
 
@@ -557,6 +563,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.undo": "\uc2e4\ud589 \ucde8\uc18c",
     "shortcuts.redo": "\ub2e4\uc2dc \uc2e4\ud589",
     "shortcuts.selectAll": "\ubaa8\ub450 \uc120\ud0dd",
+    "drop.overlay": "파일을 드롭하여 열기",
     "tab.newFile": "\uc0c8 \ud30c\uc77c",
   },
 };

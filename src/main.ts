@@ -33,6 +33,7 @@ import {
 import { openFile, saveFile, saveFileAs } from "./file-ops";
 import { getVersion, getTauriVersion } from "@tauri-apps/api/app";
 import { readTextFile } from "@tauri-apps/plugin-fs";
+import { getCurrentWebview } from "@tauri-apps/api/webview";
 import { initLocale, t, getLocale, getAvailableLocales, setLocale } from "./i18n";
 
 let focusedPane: "source" | "wysiwyg" = "source";
@@ -407,6 +408,34 @@ function setupKeyboard() {
   });
 }
 
+// Drag & drop file support
+function setupDragDrop() {
+  // Create drop overlay
+  const overlay = document.createElement("div");
+  overlay.id = "drop-overlay";
+  overlay.className = "hidden";
+  overlay.innerHTML = `<div id="drop-overlay-inner">${t("drop.overlay")}</div>`;
+  document.body.appendChild(overlay);
+
+  const webview = getCurrentWebview();
+  webview.onDragDropEvent((event) => {
+    if (event.payload.type === "enter") {
+      overlay.classList.remove("hidden");
+    } else if (event.payload.type === "drop") {
+      overlay.classList.add("hidden");
+      const paths = event.payload.paths;
+      for (const path of paths) {
+        const ext = path.replace(/\\/g, "/").split(".").pop()?.toLowerCase() || "";
+        if (["md", "markdown", "txt", "text"].includes(ext)) {
+          handleOpenRecent(path);
+        }
+      }
+    } else if (event.payload.type === "leave") {
+      overlay.classList.add("hidden");
+    }
+  });
+}
+
 // Init
 window.addEventListener("DOMContentLoaded", () => {
   initLocale();
@@ -519,6 +548,7 @@ window.addEventListener("DOMContentLoaded", () => {
   setupDivider();
   setupMenu();
   setupKeyboard();
+  setupDragDrop();
 
   // Apply i18n to HTML elements
   applyI18n();

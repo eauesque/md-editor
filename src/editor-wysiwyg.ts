@@ -185,9 +185,8 @@ function nodeToMarkdown(node: Node, listIndent: string = ""): string {
 }
 
 function markdownToHtml(md: string): string {
-  // Use remark for parsing, but we need a simple sync approach here
-  // Convert markdown to HTML that TipTap can understand
-  let html = md;
+  // Normalize line endings (CRLF → LF)
+  let html = md.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 
   // Code blocks (must be before inline code)
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, _lang, code) => {
