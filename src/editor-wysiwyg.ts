@@ -273,8 +273,15 @@ function markdownToHtml(md: string): string {
 }
 
 function inlineMarkdown(text: string): string {
-  // Inline code
-  text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
+  // Extract inline code spans and escape their content
+  const codeSpans: string[] = [];
+  text = text.replace(/`([^`]+)`/g, (_m, code) => {
+    const idx = codeSpans.length;
+    codeSpans.push(`<code>${escapeHtml(code)}</code>`);
+    return `\x00CODE${idx}\x00`;
+  });
+  // Escape HTML in remaining text so bare <tags> are not parsed as HTML
+  text = escapeHtml(text);
   // Bold
   text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   text = text.replace(/__(.+?)__/g, "<strong>$1</strong>");
@@ -285,6 +292,8 @@ function inlineMarkdown(text: string): string {
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
   // Line breaks within block
   text = text.replace(/\n/g, "<br>");
+  // Restore inline code spans
+  text = text.replace(/\x00CODE(\d+)\x00/g, (_m, idx) => codeSpans[parseInt(idx)]);
   return text;
 }
 
