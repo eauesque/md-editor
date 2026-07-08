@@ -1,6 +1,6 @@
-type Locale = "en" | "ja" | "zh-tw" | "zh-cn" | "ko";
+export type Locale = "en" | "ja" | "zh-tw" | "zh-cn" | "ko";
 
-const translations: Record<Locale, Record<string, string>> = {
+export const translations: Record<Locale, Record<string, string>> = {
   en: {
     // Menu
     "menu.new": "New",
@@ -235,6 +235,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.searchPanel": "\u691c\u7d22\u30d1\u30cd\u30eb",
     "shortcuts.nextMatch": "\u6b21\u306e\u4e00\u81f4\u3078",
     "shortcuts.prevMatch": "\u524d\u306e\u4e00\u81f4\u3078",
+    "shortcuts.closePanel": "\u9589\u3058\u308b",
     "shortcuts.editing": "\u7de8\u96c6\u5171\u901a",
     "shortcuts.undo": "\u5143\u306b\u623b\u3059",
     "shortcuts.redo": "\u3084\u308a\u76f4\u3057",
@@ -343,6 +344,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.searchPanel": "\u5c0b\u627e\u9762\u677f",
     "shortcuts.nextMatch": "\u4e0b\u4e00\u500b\u7b26\u5408",
     "shortcuts.prevMatch": "\u4e0a\u4e00\u500b\u7b26\u5408",
+    "shortcuts.closePanel": "\u95dc\u9589",
     "shortcuts.editing": "\u7de8\u8f2f\u901a\u7528",
     "shortcuts.undo": "\u5fa9\u539f",
     "shortcuts.redo": "\u91cd\u505a",
@@ -451,6 +453,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.searchPanel": "\u67e5\u627e\u9762\u677f",
     "shortcuts.nextMatch": "\u4e0b\u4e00\u4e2a\u5339\u914d",
     "shortcuts.prevMatch": "\u4e0a\u4e00\u4e2a\u5339\u914d",
+    "shortcuts.closePanel": "\u5173\u95ed",
     "shortcuts.editing": "\u7f16\u8f91\u901a\u7528",
     "shortcuts.undo": "\u64a4\u9500",
     "shortcuts.redo": "\u91cd\u505a",
@@ -559,6 +562,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "shortcuts.searchPanel": "\ucc3e\uae30 \ud328\ub110",
     "shortcuts.nextMatch": "\ub2e4\uc74c \uc77c\uce58",
     "shortcuts.prevMatch": "\uc774\uc804 \uc77c\uce58",
+    "shortcuts.closePanel": "\ub2eb\uae30",
     "shortcuts.editing": "\ud3b8\uc9d1 \uacf5\ud1b5",
     "shortcuts.undo": "\uc2e4\ud589 \ucde8\uc18c",
     "shortcuts.redo": "\ub2e4\uc2dc \uc2e4\ud589",

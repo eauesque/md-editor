@@ -258,15 +258,15 @@ function textOffsetToTiptapPos(
   return result;
 }
 
-function stripMarkdownSyntax(md: string): string {
+export function stripMarkdownSyntax(md: string): string {
   return md
+    .replace(/```[\s\S]*?```/g, "")
     .replace(/^#{1,6}\s+/gm, "")
     .replace(/\*\*(.+?)\*\*/g, "$1")
     .replace(/__(.+?)__/g, "$1")
     .replace(/\*(.+?)\*/g, "$1")
     .replace(/_(.+?)_/g, "$1")
     .replace(/`([^`]+)`/g, "$1")
-    .replace(/```[\s\S]*?```/g, "")
     .replace(/^[-*+]\s+/gm, "")
     .replace(/^\d+\.\s+/gm, "")
     .replace(/^>\s?/gm, "")

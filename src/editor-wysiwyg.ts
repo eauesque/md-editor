@@ -48,7 +48,7 @@ let suppressUpdates = false;
 
 // Simple ProseMirror HTML → Markdown converter
 // TipTap StarterKit outputs standard HTML; we convert back to Markdown
-function htmlToMarkdown(html: string): string {
+export function htmlToMarkdown(html: string): string {
   const div = document.createElement("div");
   div.innerHTML = html;
   return nodeToMarkdown(div).trim();
@@ -184,7 +184,7 @@ function nodeToMarkdown(node: Node, listIndent: string = ""): string {
   }
 }
 
-function markdownToHtml(md: string): string {
+export function markdownToHtml(md: string): string {
   // Normalize line endings (CRLF → LF)
   let html = md.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 
@@ -272,7 +272,7 @@ function markdownToHtml(md: string): string {
   return html;
 }
 
-function inlineMarkdown(text: string): string {
+export function inlineMarkdown(text: string): string {
   // Extract inline code spans and escape their content
   const codeSpans: string[] = [];
   text = text.replace(/`([^`]+)`/g, (_m, code) => {
