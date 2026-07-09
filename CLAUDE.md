@@ -5,14 +5,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Dev Commands
 
 ```bash
-npm install              # Install dependencies
-npm run dev              # Start Vite dev server (port 1420)
-npm run build            # TypeScript compile + Vite production build
-npm run tauri dev        # Launch Tauri desktop app in dev mode
-npm run tauri build      # Build distributable desktop binary
+pnpm install              # Install dependencies
+pnpm run dev              # Start Vite dev server (port 1420)
+pnpm run build            # TypeScript compile + Vite production build
+pnpm run tauri dev        # Launch Tauri desktop app in dev mode
+pnpm run tauri build      # Build distributable desktop binary
+pnpm test                 # Run Vitest unit tests once
+pnpm run test:watch       # Run Vitest in watch mode
 ```
 
-No test framework is configured.
+Vitest (jsdom environment) covers the MD↔HTML converters, i18n key parity across
+all 5 locales, tab state transitions, and the search-pane sync heuristic.
+
+### Pre-push gate
+
+A tracked hook runs `tsc --noEmit` + `vitest run` before every push instead of
+burning GitHub Actions minutes on the private repo. Enable once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Skip individual checks: `PRE_PUSH_SKIP=ts,test git push`. Bypass entirely
+(discouraged): `git push --no-verify`.
 
 ## Architecture
 

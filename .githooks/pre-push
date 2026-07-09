@@ -1,0 +1,11 @@
+#!/bin/sh
+# Tracked pre-push hook. Install once with:
+#   git config core.hooksPath .githooks
+#
+# Runs scripts/pre_push_check.mjs (tsc --noEmit / vitest run).
+# Skip individual checks via env:
+#   PRE_PUSH_SKIP=ts,test git push
+# Bypass entirely (discouraged): git push --no-verify
+
+node scripts/pre_push_check.mjs
+exit $?
