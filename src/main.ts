@@ -106,20 +106,31 @@ function renderTabs() {
   for (const tab of tabs) {
     const el = document.createElement("div");
     el.className = `tab${tab.id === activeId ? " active" : ""}${tab.modified ? " modified" : ""}`;
-    el.innerHTML = `
-      <span class="tab-title">${tab.title}</span>
-      <span class="tab-modified"></span>
-      <span class="tab-close">✕</span>
-    `;
-    el.querySelector(".tab-title")!.addEventListener("click", () => {
+    const title = document.createElement("span");
+    title.className = "tab-title";
+    title.textContent = tab.title;
+    const modified = document.createElement("span");
+    modified.className = "tab-modified";
+    const close = document.createElement("span");
+    close.className = "tab-close";
+    close.textContent = "✕";
+    el.append(title, modified, close);
+    title.addEventListener("click", () => {
       switchToTab(tab.id);
     });
-    el.querySelector(".tab-close")!.addEventListener("click", (e) => {
+    close.addEventListener("click", (e) => {
       e.stopPropagation();
-      closeTab(tab.id);
+      requestCloseTab(tab.id);
     });
     tabList.appendChild(el);
   }
+}
+
+function requestCloseTab(id: string) {
+  const tab = getAllTabs().find((t) => t.id === id);
+  if (!tab) return;
+  if (tab.modified && !confirm(t("file.confirmClose", { title: tab.title }))) return;
+  closeTab(id);
 }
 
 function onTabSwitch(tab: { content: string; filePath: string | null }) {
@@ -313,19 +324,25 @@ async function showAbout() {
 function renderRecentFiles(dropdown: HTMLElement) {
   const recent = getRecentFiles();
   if (recent.length === 0) {
-    dropdown.innerHTML = `<div class="dropdown-empty">${t("file.noRecent")}</div>`;
+    dropdown.innerHTML = "";
+    const empty = document.createElement("div");
+    empty.className = "dropdown-empty";
+    empty.textContent = t("file.noRecent");
+    dropdown.appendChild(empty);
     return;
   }
-  dropdown.innerHTML = recent.map((path) =>
-    `<button data-path="${path.replace(/"/g, "&quot;")}" title="${path}">${fileNameFromPath(path)}</button>`
-  ).join("");
-  dropdown.querySelectorAll("button[data-path]").forEach((btn) => {
+  dropdown.innerHTML = "";
+  for (const path of recent) {
+    const btn = document.createElement("button");
+    btn.dataset.path = path;
+    btn.title = path;
+    btn.textContent = fileNameFromPath(path);
     btn.addEventListener("click", () => {
-      const path = btn.getAttribute("data-path")!;
       dropdown.classList.add("hidden");
       handleOpenRecent(path);
     });
-  });
+    dropdown.appendChild(btn);
+  }
 }
 
 // Apply i18n to all elements with data-i18n and data-i18n-title attributes
@@ -403,7 +420,7 @@ function setupKeyboard() {
     if (e.ctrlKey && e.key === "w") {
       e.preventDefault();
       const activeId = getActiveTabId();
-      if (activeId) closeTab(activeId);
+      if (activeId) requestCloseTab(activeId);
     }
   });
 }

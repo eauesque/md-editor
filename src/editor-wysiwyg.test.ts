@@ -120,4 +120,10 @@ describe("inlineMarkdown", () => {
       '<a href="https://example.com">go</a>'
     );
   });
+
+  it("escapes markdown link href attributes", () => {
+    expect(inlineMarkdown('[go](https://example.com/"x)')).toBe(
+      '<a href="https://example.com/&quot;x">go</a>'
+    );
+  });
 });

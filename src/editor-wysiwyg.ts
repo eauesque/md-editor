@@ -289,7 +289,9 @@ export function inlineMarkdown(text: string): string {
   text = text.replace(/\*(.+?)\*/g, "<em>$1</em>");
   text = text.replace(/_(.+?)_/g, "<em>$1</em>");
   // Links
-  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, href) =>
+    `<a href="${escapeHtmlAttribute(href)}">${label}</a>`
+  );
   // Line breaks within block
   text = text.replace(/\n/g, "<br>");
   // Restore inline code spans
@@ -302,6 +304,10 @@ function escapeHtml(text: string): string {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+}
+
+function escapeHtmlAttribute(text: string): string {
+  return escapeHtml(text).replace(/"/g, "&quot;");
 }
 
 export function createWysiwygEditor(
@@ -447,7 +453,7 @@ export function promptAndSetLink() {
     editor
       .chain()
       .focus()
-      .insertContent(`<a href="${url}">${text}</a>`)
+      .insertContent(`<a href="${escapeHtmlAttribute(url)}">${escapeHtml(text)}</a>`)
       .run();
   } else {
     // Wrap selection in link
