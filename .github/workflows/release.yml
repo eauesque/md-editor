@@ -66,14 +66,15 @@ jobs:
           releaseBody: |
             ## MD Editor ${{ github.ref_name }}
 
-            ### Bug Fixes
-            - **Fix WYSIWYG preview rendering**: Files with Windows line endings (CRLF) were only showing the first line in the right pane.
+            ### Fixes
+            - Fixed unsafe WYSIWYG rendering and a tab-close guard issue.
 
-            ### New Features
-            - **Drag & drop file open**: Drag `.md`, `.markdown`, `.txt` files onto the editor window to open them.
-            - **i18n support**: English, Japanese, Traditional Chinese, Simplified Chinese, Korean
+            ### Chores
+            - Added a Vitest test suite covering markdown converters, search sync, tabs, and i18n.
+            - Added a tracked pre-push gate (`tsc` + `vitest`) to catch regressions before CI.
+            - Regenerated app icons and added Android/iOS icon assets.
 
-            See [CHANGELOG](https://github.com/eauesque/md-editor/compare/v0.1.0...v0.2.0) for details.
+            See [CHANGELOG](https://github.com/eauesque/md-editor/compare/v0.2.1...v0.3.0) for details.
           releaseDraft: false
           prerelease: false
           args: --target ${{ matrix.target }}
